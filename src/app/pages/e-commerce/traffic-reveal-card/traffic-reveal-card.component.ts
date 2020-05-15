@@ -2,6 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { TrafficList, TrafficListData } from '../../../@core/data/traffic-list';
 import { TrafficBarData, TrafficBar } from '../../../@core/data/traffic-bar';
 import { takeWhile } from 'rxjs/operators';
+import { ApiService } from '../../../@core/mock/api.service';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'ngx-traffic-reveal-card',
@@ -13,18 +15,20 @@ export class TrafficRevealCardComponent implements OnDestroy {
   private alive = true;
 
   trafficBarData: TrafficBar;
-  trafficListData: TrafficList;
+  trafficListData: TrafficList[];
   revealed = false;
   period: string = 'week';
 
   constructor(private trafficListService: TrafficListData,
-              private trafficBarService: TrafficBarData) {
+              private trafficBarService: TrafficBarData,
+              private apiService: ApiService) {
     this.getTrafficFrontCardData(this.period);
     this.getTrafficBackCardData(this.period);
   }
 
   toggleView() {
     this.revealed = !this.revealed;
+
   }
 
   setPeriodAngGetData(value: string): void {
@@ -43,12 +47,11 @@ export class TrafficRevealCardComponent implements OnDestroy {
   }
 
   getTrafficFrontCardData(period: string) {
-    this.trafficListService.getTrafficListData(period)
-      .pipe(takeWhile(() => this.alive))
-      .subscribe(trafficListData => {
-        this.trafficListData = trafficListData;
-      });
+    this.apiService.getTraffic(period).subscribe(data =>
+      this.trafficListData = data);
   }
+
+
 
   ngOnDestroy() {
     this.alive = false;

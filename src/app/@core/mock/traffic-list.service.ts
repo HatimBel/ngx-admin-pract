@@ -16,6 +16,8 @@ export class TrafficListService extends TrafficListData {
       month: this.getDataMonth(),
       year: this.getDataYear(),
     };
+    // tslint:disable-next-line:no-console
+    console.log(JSON.stringify(this.data));
   }
 
   private getDataWeek(): TrafficList[] {
