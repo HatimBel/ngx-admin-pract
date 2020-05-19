@@ -1,5 +1,6 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import {LandingPageComponent} from './landing-page/landing-page.component';
 import {
   NbAuthComponent,
   NbLoginComponent,
@@ -9,7 +10,12 @@ import {
   NbResetPasswordComponent,
 } from '@nebular/auth';
 
+
 export const routes: Routes = [
+  {
+    path: 'landing-page',
+    component: LandingPageComponent,
+  },
   {
     path: 'pages',
     loadChildren: () => import('./pages/pages.module')
@@ -45,8 +51,8 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
+  { path: '**', redirectTo: 'auth' },
 ];
 
 const config: ExtraOptions = {
