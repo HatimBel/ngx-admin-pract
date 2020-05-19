@@ -13,7 +13,7 @@ export class ApiService {
   public getTraffic(period: String): Observable<TrafficList[]>{
     const ur = this.API_URL + period;
     return this.http.get<TrafficList[]>(ur).pipe(
-      tap(_ => this.log('fetched heroes')),
+      tap(_ => this.log('fetched Traffic')),
       catchError(this.handleError<TrafficList[]>('getTraffic', [])));
   }
 
